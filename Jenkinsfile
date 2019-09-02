@@ -50,8 +50,10 @@ pipeline {
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --name train-schedule -p 8088:8080 -d cocodrilo-emplumado/train-schedule:${env.BUILD_NUMBER}\""
-                    }
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker run --name train-schedule -p 8088:8080 -d cocodrilo-emplumado/train-schedule:${env.BUILD_NUMBER}\""
+                        } 
+                   }
                 }
             }
         }
