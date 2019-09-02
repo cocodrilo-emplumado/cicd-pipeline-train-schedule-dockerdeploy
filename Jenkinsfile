@@ -16,7 +16,7 @@ pipeline {
                 script {
                     app = docker.build("cocodriloemplumado/train-schedule")
                     app.inside {
-                        sh 'echo $(curl localhost:8088)'
+                        sh 'echo $(curl localhost:8080)'
                     }
                 }
             }
